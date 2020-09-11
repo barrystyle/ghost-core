@@ -209,7 +209,7 @@ static void UpdateSpecialTxInputsHash(const CMutableTransaction& tx, SpecialTxPa
 }
 
 template<typename SpecialTxPayload>
-static void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxPayload& payload, const CKey& key)
+void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxPayload& payload, const CKey& key)
 {
     UpdateSpecialTxInputsHash(tx, payload);
     payload.vchSig.clear();
@@ -221,7 +221,7 @@ static void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxP
 }
 
 template<typename SpecialTxPayload>
-static void SignSpecialTxPayloadByString(const CMutableTransaction& tx, SpecialTxPayload& payload, const CKey& key)
+void SignSpecialTxPayloadByString(const CMutableTransaction& tx, SpecialTxPayload& payload, const CKey& key)
 {
     UpdateSpecialTxInputsHash(tx, payload);
     payload.vchSig.clear();
@@ -233,7 +233,7 @@ static void SignSpecialTxPayloadByString(const CMutableTransaction& tx, SpecialT
 }
 
 template<typename SpecialTxPayload>
-static void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxPayload& payload, const CBLSSecretKey& key)
+void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxPayload& payload, const CBLSSecretKey& key)
 {
     UpdateSpecialTxInputsHash(tx, payload);
 
@@ -241,7 +241,7 @@ static void SignSpecialTxPayloadByHash(const CMutableTransaction& tx, SpecialTxP
     payload.sig = key.Sign(hash);
 }
 
-static std::string SignAndSendSpecialTx(const CMutableTransaction& tx)
+std::string SignAndSendSpecialTx(const CMutableTransaction& tx)
 {
     {
     LOCK(cs_main);

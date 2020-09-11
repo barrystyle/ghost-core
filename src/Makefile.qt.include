@@ -137,6 +137,7 @@ BITCOIN_QT_H = \
   qt/masternodelist.h \
   qt/networkstyle.h \
   qt/notificator.h \
+  qt/oneclickmasternode.h \
   qt/openuridialog.h \
   qt/optionsdialog.h \
   qt/optionsmodel.h \
@@ -207,6 +208,7 @@ RES_ICONS = \
   qt/res/icons/network_disabled.png \
   qt/res/icons/overview.png \
   qt/res/icons/masternodes.png \
+  qt/res/icons/setupMasternode.png \
   qt/res/icons/proxy.png \
   qt/res/icons/receive.png \
   qt/res/icons/remove.png \
@@ -258,6 +260,7 @@ BITCOIN_QT_WALLET_CPP = \
   qt/createwalletdialog.cpp \
   qt/editaddressdialog.cpp \
   qt/masternodelist.cpp \
+  qt/oneclickmasternode.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
   qt/paymentserver.cpp \

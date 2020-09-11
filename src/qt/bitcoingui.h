@@ -133,6 +133,7 @@ private:
     QAction* overviewAction = nullptr;
     QAction* historyAction = nullptr;
     QAction* masternodeAction = nullptr;
+    QAction* oneClickGhostNode = nullptr;
     QAction* quitAction = nullptr;
     QAction* sendCoinsAction = nullptr;
     QAction* sendCoinsMenuAction = nullptr;
@@ -202,6 +203,7 @@ private:
     /** Update UI with latest network info from model. */
     void updateNetworkState();
 
+    void createOneClickMasternode();
     void updateHeadersSyncProgressLabel();
 
     /** Open the OptionsDialog on the specified tab index */

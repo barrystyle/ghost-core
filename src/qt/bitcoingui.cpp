@@ -12,6 +12,7 @@
 #include <qt/modaloverlay.h>
 #include <qt/networkstyle.h>
 #include <qt/notificator.h>
+#include <qt/oneclickmasternode.h>
 #include <qt/openuridialog.h>
 #include <qt/optionsdialog.h>
 #include <qt/optionsmodel.h>
@@ -286,8 +287,16 @@ void BitcoinGUI::createActions()
     masternodeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(masternodeAction);
 
+    oneClickGhostNode = new QAction(QIcon(":/icons/oneclickmn"), tr("&OneClickNode"), this);
+    oneClickGhostNode->setStatusTip(tr("Set up a one click masternode"));
+    oneClickGhostNode->setToolTip(oneClickGhostNode->statusTip());
+    oneClickGhostNode->setCheckable(true);
+    oneClickGhostNode->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(oneClickGhostNode);
+
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
+    connect(oneClickGhostNode, &QAction::triggered, [this] { createOneClickMasternode(); });
     connect(masternodeAction, &QAction::triggered, [this]{ showNormalIfMinimized(); });
     connect(masternodeAction, &QAction::triggered, [this] { gotoMasternodePage(); });
     connect(overviewAction, &QAction::triggered, [this]{ showNormalIfMinimized(); });
@@ -546,6 +555,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(masternodeAction);
+        toolbar->addAction(oneClickGhostNode);
         overviewAction->setChecked(true);
 
 #ifdef ENABLE_WALLET
@@ -733,6 +743,7 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     receiveCoinsMenuAction->setEnabled(enabled);
     historyAction->setEnabled(enabled);
     masternodeAction->setEnabled(enabled);
+    oneClickGhostNode->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
@@ -1522,6 +1533,16 @@ void BitcoinGUI::showProgress(const QString &title, int nProgress)
     } else if (progressDialog) {
         progressDialog->setValue(nProgress);
     }
+}
+
+void BitcoinGUI::createOneClickMasternode()
+{
+    oneClickGhostNode->setEnabled(false);
+
+    bool fSuccess = ::createOneClickMasternode();
+    LogPrintf("operation was %s\n", fSuccess ? "successful" : "not successful");
+
+    oneClickGhostNode->setEnabled(true);
 }
 
 void BitcoinGUI::setTrayIconVisible(bool fHideTrayIcon)
